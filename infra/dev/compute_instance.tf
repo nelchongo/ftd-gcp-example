@@ -33,14 +33,6 @@ resource "google_service_account" "vm_service_account" {
   display_name = "VM Service Account"
 }
 
-resource "google_project_iam_binding" "service_account_binding" {
-  project = var.project_id
-  role    = google_project_iam_custom_role.secret_reader.name
-  members = [
-    "serviceAccount:${google_service_account.vm_service_account.email}"
-  ]
-}
-
 resource "google_secret_manager_secret_iam_binding" "secret_access" {
   secret_id = google_secret_manager_secret.analytics-test-secret.id
   role      = "roles/secretmanager.secretAccessor"
